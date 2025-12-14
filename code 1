@@ -1,0 +1,171 @@
+# SageMath code to solve the Diophantine equation
+# and generate families of infinitely many integer solutions
+
+# Define the symbolic variables
+var('b g')
+
+# Define the left-hand side of the equation
+LHS = (9*(g + 270)^2 + 27*(g + 270) + 27) - \
+      (81*(g + 243)^2 + 2187*(g + 243) + 19683) + \
+      (243*(b + 9)^2 + 19683*(b + 9) + 531441) - \
+      (27*b^2 + 243*b + 729)
+
+# Define the right-hand side of the equation
+RHS = (729*g^2 + 177147*g + 14348907) - \
+      (2187*(b + 90)^2 + 1594323*(b + 90) + 387420489)
+
+# Form the equation (LHS - RHS = 0)
+equation = LHS - RHS
+
+# Expand and simplify the equation
+equation_expanded = expand(equation)
+print("Expanded equation:")
+print(f"{equation_expanded} = 0")
+print()
+
+# Collect coefficients
+equation_simplified = equation_expanded.collect(b).collect(g)
+print("Simplified equation:")
+print(f"{equation_simplified} = 0")
+print()
+
+# Extract coefficients manually for the linear form: a*b + c*g + d = 0
+coeffs = equation_expanded.coefficients()
+print("Coefficients analysis:")
+
+# Get coefficient of b
+coeff_b = equation_expanded.coefficient(b, 1)
+print(f"Coefficient of b: {coeff_b}")
+
+# Get coefficient of g
+coeff_g = equation_expanded.coefficient(g, 1)
+print(f"Coefficient of g: {coeff_g}")
+
+# Get constant term (substitute b=0, g=0)
+const_term = equation_expanded.subs(b=0, g=0)
+print(f"Constant term: {const_term}")
+print()
+
+# The equation should be of the form: coeff_b * b + coeff_g * g + const_term = 0
+# Rearranging: coeff_b * b + coeff_g * g = -const_term
+
+a = Integer(coeff_b)
+c = Integer(coeff_g)
+d = Integer(-const_term)
+
+print(f"Linear Diophantine equation: {a}*b + {c}*g = {d}")
+print()
+
+# Find GCD of coefficients
+from sage.arith.misc import gcd, xgcd
+g_cd = gcd(a, c)
+print(f"GCD({a}, {c}) = {g_cd}")
+
+# Check if solutions exist
+if d % g_cd != 0:
+    print("No integer solutions exist (GCD does not divide the constant term)")
+else:
+    print(f"Integer solutions exist ({d} is divisible by {g_cd})")
+    print()
+    
+    # Simplify the equation by dividing by GCD
+    a_simplified = a // g_cd
+    c_simplified = c // g_cd
+    d_simplified = d // g_cd
+    
+    print(f"Simplified equation: {a_simplified}*b + {c_simplified}*g = {d_simplified}")
+    print()
+    
+    # Use extended Euclidean algorithm to find a particular solution
+    gcd_val, u, v = xgcd(a_simplified, c_simplified)
+    
+    # Particular solution
+    b0 = u * d_simplified
+    g0 = v * d_simplified
+    
+    print(f"Particular solution: b0 = {b0}, g0 = {g0}")
+    print()
+    
+    # Verify the particular solution
+    verification = a_simplified * b0 + c_simplified * g0 - d_simplified
+    print(f"Verification: {a_simplified}*{b0} + {c_simplified}*{g0} = {a_simplified*b0 + c_simplified*g0}")
+    print(f"Should equal {d_simplified}: {verification == 0}")
+    print()
+    
+    # General solution formula
+    # b = b0 + (c_simplified / gcd) * t
+    # g = g0 - (a_simplified / gcd) * t
+    # where t is any integer parameter
+    
+    b_step = c_simplified
+    g_step = -a_simplified
+    
+    print("=" * 70)
+    print("GENERAL SOLUTION (Parametric Family):")
+    print("=" * 70)
+    print(f"b = {b0} + ({b_step})*t")
+    print(f"g = {g0} + ({g_step})*t")
+    print("where t ∈ ℤ (any integer)")
+    print()
+    
+    # Generate sample solutions
+    print("=" * 70)
+    print("SAMPLE INTEGER SOLUTIONS:")
+    print("=" * 70)
+    print(f"{'t':>5} | {'b':>10} | {'g':>10} | Verification")
+    print("-" * 70)
+    
+    for t in range(-10, 11):
+        b_val = b0 + b_step * t
+        g_val = g0 + g_step * t
+        
+        # Verify solution
+        verify = a_simplified * b_val + c_simplified * g_val - d_simplified
+        check_mark = "✓" if verify == 0 else "✗"
+        
+        print(f"{t:>5} | {b_val:>10} | {g_val:>10} | {check_mark}")
+    
+    print()
+    print("=" * 70)
+    print("VERIFICATION WITH ORIGINAL EQUATION:")
+    print("=" * 70)
+    
+    # Verify a few solutions with the original equation
+    for t in [-2, 0, 2, 5]:
+        b_val = b0 + b_step * t
+        g_val = g0 + g_step * t
+        
+        # Substitute into original equation
+        LHS_val = LHS.subs(b=b_val, g=g_val)
+        RHS_val = RHS.subs(b=b_val, g=g_val)
+        
+        print(f"t = {t}: b = {b_val}, g = {g_val}")
+        print(f"  LHS = {LHS_val}")
+        print(f"  RHS = {RHS_val}")
+        print(f"  LHS - RHS = {LHS_val - RHS_val}")
+        print(f"  Valid: {LHS_val == RHS_val}")
+        print()
+    
+    # Alternative representation
+    print("=" * 70)
+    print("ALTERNATIVE REPRESENTATIONS:")
+    print("=" * 70)
+    
+    # Express in terms of the original (non-simplified) coefficients
+    if g_cd > 1:
+        print(f"Using original coefficients (before dividing by GCD={g_cd}):")
+        b0_orig = b0
+        g0_orig = g0
+        b_step_orig = c
+        g_step_orig = -a
+        
+        print(f"b = {b0_orig} + ({b_step_orig})*t")
+        print(f"g = {g0_orig} + ({g_step_orig})*t")
+        print()
+    
+    # Express as a linear combination
+    print(f"Every integer solution (b, g) can be written as:")
+    print(f"(b, g) = ({b0}, {g0}) + t·({b_step}, {g_step}), t ∈ ℤ")
+    print()
+    
+    print("This generates INFINITELY MANY integer solutions!")
