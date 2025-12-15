@@ -1,0 +1,314 @@
+# SageMath Code to Solve: y^2 = 95052·x^2 + 79577748·x + 21541980561
+print("=" * 80)
+print("SOLVING DIOPHANTINE EQUATION: y² = 95052·x² + 79577748·x + 21541980561")
+print("=" * 80)
+
+# Define variables
+x, y = var('x y')
+
+# Define the equation
+eq = y^2 - (95052*x^2 + 79577748*x + 21541980561)
+
+print("\n1. ANALYZING THE EQUATION:")
+print("-" * 40)
+print(f"Equation: y² = 95052·x² + 79577748·x + 21541980561")
+print(f"Right side: R(x) = 95052·x² + 79577748·x + 21541980561")
+
+# Factor the quadratic coefficient
+print(f"\nFactor 95052: {factor(95052)}")
+print(f"Factor 79577748: {factor(79577748)}")
+print(f"Factor 21541980561: {factor(21541980561)}")
+
+# Check if we can complete the square
+print("\n2. COMPLETING THE SQUARE:")
+print("-" * 40)
+
+# The quadratic: 95052x² + 79577748x + 21541980561
+# Factor out 95052: 95052[x² + (79577748/95052)x] + 21541980561
+# Simplify coefficient: 79577748/95052 = 837
+print("95052x² + 79577748x = 95052[x² + 837x]")
+
+# Complete square: x² + 837x = (x + 837/2)² - (837/2)²
+print("x² + 837x = (x + 837/2)² - (837/2)²")
+
+# Multiply by 4 to avoid fractions
+print("\nMultiplying original equation by 4:")
+print("4y² = 4·95052·x² + 4·79577748·x + 4·21541980561")
+
+# Let's define new variables to eliminate fractions
+print("\nLet X = 2x + 837, then x = (X - 837)/2")
+print("Let Y = 2y")
+
+X, Y = var('X Y')
+x_expr = (X - 837)/2
+y_expr = Y/2
+
+# Substitute into 4y² = 4·95052·x² + 4·79577748·x + 4·21541980561
+lhs = 4*(y_expr^2)
+rhs = 4*95052*(x_expr^2) + 4*79577748*x_expr + 4*21541980561
+
+eq_transformed = lhs - rhs
+eq_transformed = eq_transformed.expand().simplify()
+
+print(f"\nTransformed equation: {eq_transformed} = 0")
+
+# This should simplify to something like Y² - A·X² = B
+coeff_Y2 = eq_transformed.coefficient(Y, 2)
+coeff_X2 = eq_transformed.coefficient(X, 2)
+constant = (eq_transformed - coeff_Y2*Y^2 - coeff_X2*X^2).simplify()
+
+print(f"\nCoefficients:")
+print(f"  Y² coefficient: {coeff_Y2}")
+print(f"  X² coefficient: {coeff_X2}")
+print(f"  Constant term: {constant}")
+
+# The equation should be: coeff_Y2·Y² + coeff_X2·X² + constant = 0
+# Or: coeff_Y2·Y² = -coeff_X2·X² - constant
+
+print(f"\nEquation form: {coeff_Y2}·Y² + {coeff_X2}·X² + {constant} = 0")
+
+# Rearrange to Pell-type form
+print("\n3. TRANSFORMING TO PELL EQUATION:")
+print("-" * 40)
+
+# Multiply by appropriate constant to get integer coefficients
+# The equation appears to be: Y² - 95052·X² = constant (after scaling)
+
+# Let's work directly with the original by completing square properly
+print("\nDirect completion of square:")
+print("y² = 95052[x² + 837x] + 21541980561")
+print("   = 95052[(x + 837/2)² - (837/2)²] + 21541980561")
+print("   = 95052(x + 837/2)² - 95052·(837/2)² + 21541980561")
+
+# Compute constant term
+const_term = -95052*(837/2)^2 + 21541980561
+print(f"Constant term after completion: {const_term}")
+
+# Multiply by 4 to clear fractions
+print("\nMultiply by 4:")
+print("4y² = 4·95052(x + 837/2)² + 4·{const_term}")
+
+# Let u = 2x + 837, v = 2y
+print("\nLet u = 2x + 837, v = 2y")
+print("Then: x = (u - 837)/2, y = v/2")
+
+u, v = var('u v')
+x_sub = (u - 837)/2
+y_sub = v/2
+
+# Substitute into 4y² = 95052·u² + 4·const_term
+lhs_simple = 4*(y_sub^2)
+rhs_simple = 95052*u^2 + 4*const_term
+
+eq_simple = lhs_simple - rhs_simple
+eq_simple = eq_simple.expand().simplify()
+print(f"\nSimple equation: {eq_simple} = 0")
+
+# This should be: v² - 95052·u² = 4·const_term
+print("\n4. SEARCHING FOR INTEGER SOLUTIONS:")
+print("-" * 40)
+
+# We need v² - 95052·u² = K, where K = 4*const_term
+# Compute K
+K = 4*const_term
+print(f"Pell-type equation: v² - 95052·u² = {K}")
+
+# Search for small solutions
+print(f"\nSearching for small solutions (|u| ≤ 1000):")
+solutions = []
+
+for u_val in range(-1000, 1001):
+    # Compute v² = K + 95052·u²
+    v_squared = K + 95052 * u_val^2
+    if v_squared >= 0:
+        v_val = sqrt(v_squared)
+        if v_val.is_integer():
+            v_val = int(v_val)
+            # Check both signs
+            for sign in [1, -1]:
+                v_final = sign * v_val
+                # Compute x and y
+                x_final = (u_val - 837)/2
+                y_final = v_final/2
+                if x_final.is_integer() and y_final.is_integer():
+                    x_final = int(x_final)
+                    y_final = int(y_final)
+                    # Verify
+                    lhs_check = y_final^2
+                    rhs_check = 95052*x_final^2 + 79577748*x_final + 21541980561
+                    if lhs_check == rhs_check:
+                        solutions.append((x_final, y_final, u_val, v_final))
+            
+            if len(solutions) >= 5:
+                break
+
+if solutions:
+    print(f"\nFound {len(solutions)} integer solution(s):")
+    print("-" * 60)
+    print(f"{'x':>10} | {'y':>15} | {'u':>10} | {'v':>15} | Verification")
+    print("-" * 60)
+    
+    for i, (x_val, y_val, u_val, v_val) in enumerate(solutions[:10]):
+        # Verify
+        lhs = y_val^2
+        rhs = 95052*x_val^2 + 79577748*x_val + 21541980561
+        is_valid = lhs == rhs
+        check = "✓" if is_valid else "✗"
+        
+        print(f"{x_val:>10} | {y_val:>15} | {u_val:>10} | {v_val:>15} | {check}")
+    
+    print("-" * 60)
+    
+    # If we found solutions, look for patterns
+    print("\n5. ANALYZING SOLUTION PATTERNS:")
+    print("-" * 40)
+    
+    # Check if solutions follow linear pattern
+    if len(solutions) >= 3:
+        xs = [sol[0] for sol in solutions]
+        ys = [sol[1] for sol in solutions]
+        
+        print(f"x values: {xs}")
+        print(f"y values: {ys}")
+        
+        # Check differences
+        if len(xs) > 1:
+            x_diffs = [xs[i+1] - xs[i] for i in range(len(xs)-1)]
+            y_diffs = [ys[i+1] - ys[i] for i in range(len(ys)-1)]
+            print(f"x differences: {x_diffs}")
+            print(f"y differences: {y_diffs}")
+            
+            # Check ratios
+            ratios = [y_diffs[i]/x_diffs[i] for i in range(len(x_diffs)) if x_diffs[i] != 0]
+            if ratios:
+                print(f"Δy/Δx ratios: {ratios}")
+    
+else:
+    print("\nNo small integer solutions found in search range.")
+    
+    # Try larger search or different approach
+    print("\nTrying direct search for x values...")
+    print("Searching x in [-500, 500]:")
+    
+    direct_solutions = []
+    for x_val in range(-500, 501):
+        rhs = 95052*x_val^2 + 79577748*x_val + 21541980561
+        if rhs >= 0:
+            y_val = sqrt(rhs)
+            if y_val.is_integer():
+                y_val = int(y_val)
+                direct_solutions.append((x_val, y_val))
+        
+        if len(direct_solutions) >= 5:
+            break
+    
+    if direct_solutions:
+        print(f"\nFound {len(direct_solutions)} solution(s) via direct search:")
+        for x_val, y_val in direct_solutions:
+            print(f"  x = {x_val}, y = {y_val} (y² = {y_val^2})")
+    else:
+        print("\nNo solutions found in direct search either.")
+
+# Try to find the Pell equation structure
+print("\n6. PELL EQUATION ANALYSIS:")
+print("-" * 40)
+
+# Our equation: v² - 95052·u² = K
+# We need fundamental solution to v² - 95052·u² = 1
+print("Finding fundamental solution to v² - 95052·u² = 1...")
+
+fund_solutions = []
+# Search for small fundamental solution
+for u1 in range(1, 100):
+    v1_sq = 1 + 95052 * u1^2
+    v1 = sqrt(v1_sq)
+    if v1.is_integer():
+        v1 = int(v1)
+        fund_solutions.append((u1, v1))
+        print(f"  Found: {v1}² - 95052·{u1}² = {v1^2 - 95052*u1^2}")
+        break
+
+if fund_solutions:
+    u1, v1 = fund_solutions[0]
+    print(f"\nFundamental solution: (u₁, v₁) = ({u1}, {v1})")
+    
+    # If we have one solution to v² - 95052·u² = K, we can generate infinite families
+    if solutions:
+        print("\nGenerating infinite families from one solution:")
+        
+        # Take first solution's u,v values
+        _, _, u0, v0 = solutions[0]
+        print(f"Initial solution: (u₀, v₀) = ({u0}, {v0})")
+        
+        print("\nInfinite families formula:")
+        print(f"(u_n + v_n√95052) = (u₀ + v₀√95052)·({v1} + {u1}√95052)^n")
+        
+        print("\nFirst few families (n = 0..3):")
+        print("-" * 50)
+        print(f"{'n':>3} | {'u_n':>10} | {'v_n':>15} | {'x_n':>10} | {'y_n':>15}")
+        print("-" * 50)
+        
+        # Initialize
+        u_current, v_current = u0, v0
+        
+        for n in range(4):
+            # Compute x and y
+            x_n = (u_current - 837)/2
+            y_n = v_current/2
+            
+            # Check if integers
+            if x_n.is_integer() and y_n.is_integer():
+                x_int = int(x_n)
+                y_int = int(y_n)
+                print(f"{n:>3} | {u_current:>10} | {v_current:>15} | {x_int:>10} | {y_int:>15}")
+            else:
+                print(f"{n:>3} | {u_current:>10} | {v_current:>15} | {'Non-int':>10} | {'Non-int':>15}")
+            
+            # Next using Pell recurrence
+            u_next = v1*u_current + 95052*u1*v_current
+            v_next = v1*v_current + u1*u_current
+            
+            u_current, v_current = u_next, v_next
+        
+        print("-" * 50)
+else:
+    print("No fundamental solution found in search range.")
+    print("Fundamental solution might be very large.")
+
+# Alternative: Check if the quadratic is a perfect square for some x
+print("\n7. CHECKING FOR PERFECT SQUARES:")
+print("-" * 40)
+
+print("Checking if R(x) = 95052x² + 79577748x + 21541980561 is a perfect square for small x:")
+
+perfect_squares = []
+for x_test in range(-20, 21):
+    R = 95052*x_test^2 + 79577748*x_test + 21541980561
+    if R >= 0:
+        y_test = sqrt(R)
+        if y_test.is_integer():
+            perfect_squares.append((x_test, int(y_test)))
+
+if perfect_squares:
+    print(f"Found {len(perfect_squares)} perfect square(s):")
+    for x_val, y_val in perfect_squares:
+        print(f"  x = {x_val}: R({x_val}) = {y_val}² = {y_val^2}")
+else:
+    print("No perfect squares found for small x values.")
+
+print("\n" + "=" * 80)
+print("SOLUTION SUMMARY:")
+print("=" * 80)
+
+if solutions:
+    print(f"Found {len(solutions)} integer solution(s) to y² = 95052x² + 79577748x + 21541980561")
+    print("\nAll solutions come from the Pell equation: v² - 95052·u² = K")
+    print("where u = 2x + 837, v = 2y, and K = -95052·(837/2)² + 21541980561")
+    print("\nTo generate infinite families, find one solution and apply Pell recurrence.")
+else:
+    print("No integer solutions found in search ranges.")
+    print("The equation may have solutions that are very large or non-existent.")
+    print("\nConsider:")
+    print("1. Increasing search ranges")
+    print("2. Using more advanced Pell equation solvers")
+    print("3. Checking if the equation actually has integer solutions")
