@@ -1,0 +1,180 @@
+# SageMath code to find t values where y > 0
+# Equation: y = -69178891548 + (-7919)·t
+
+print("=" * 60)
+print("SOLVING: y = -69178891548 + (-7919)·t > 0")
+print("=" * 60)
+
+# The equation: y = -69178891548 - 7919·t > 0
+# Solve inequality: -69178891548 - 7919·t > 0
+# Rearranged: -7919·t > 69178891548
+# Multiply by -1 (reverse inequality): 7919·t < -69178891548
+# Therefore: t < -69178891548 / 7919
+
+# Calculate the critical value
+critical_value = -69178891548 / 7919
+print(f"\nCritical value: t < {critical_value}")
+print(f"Approximately: t < {float(critical_value)}")
+
+# Determine integer t values that make y positive
+print("\n" + "=" * 60)
+print("INTEGER t VALUES FOR POSITIVE y")
+print("=" * 60)
+
+# Since t must be LESS than the critical value for y > 0,
+# and t is presumably integer (since it's a parameter in Diophantine equations)
+max_t_for_positive_y = floor(critical_value) - 1  # t must be strictly less
+
+print(f"\nFor y > 0, t must be an integer < {float(critical_value)}")
+print(f"So t ≤ {max_t_for_positive_y}")
+
+# Show some example t values and corresponding y values
+print("\nExample t values and corresponding y:")
+print("-" * 40)
+print(f"{'t':>10} | {'y':>20} | y > 0?")
+print("-" * 40)
+
+# Test some t values around the boundary
+test_ts = [
+    max_t_for_positive_y + 2,  # Should give y < 0
+    max_t_for_positive_y + 1,  # Should give y < 0  
+    max_t_for_positive_y,      # Should give y > 0 (since t < critical)
+    max_t_for_positive_y - 1,  # Should give y > 0
+    max_t_for_positive_y - 2,  # Should give y > 0
+    max_t_for_positive_y - 5,  # Should give y > 0
+    max_t_for_positive_y - 10, # Should give y > 0
+    -8738000,                  # Around the critical value
+    -8738000 - 100,            # Further negative
+    -8738000 - 1000,           # Even further negative
+]
+
+for t_val in test_ts:
+    y_val = -69178891548 - 7919*t_val
+    is_positive = y_val > 0
+    print(f"{t_val:>10} | {y_val:>20} | {is_positive}")
+
+# Find all integer t in a range that yield positive y
+print("\n" + "=" * 60)
+print("RANGE OF t VALUES YIELDING POSITIVE y")
+print("=" * 60)
+
+# Define a search range (you can adjust these bounds)
+t_min = -10_000_000  # More negative bound
+t_max = max_t_for_positive_y
+
+print(f"\nSearching for t in [{t_min}, {t_max}]...")
+
+# Count how many t values in this range give positive y
+count_positive = 0
+positive_examples = []
+
+# Check a sample (every 10000th value to avoid too much output)
+sample_step = 10000
+for t_val in range(t_min, t_max + 1, sample_step):
+    y_val = -69178891548 - 7919*t_val
+    if y_val > 0:
+        count_positive += 1
+        if len(positive_examples) < 5:  # Save first few examples
+            positive_examples.append((t_val, y_val))
+
+print(f"\nIn the range t ∈ [{t_min}, {t_max}]:")
+print(f"- There are approximately {(t_max - t_min + 1) // sample_step * count_positive // len(range(t_min, t_max+1, sample_step)):,} integer t values with y > 0")
+print(f"- Sample positive y values:")
+
+for t_val, y_val in positive_examples:
+    print(f"  t = {t_val:>10} → y = {y_val:>20}")
+
+# Generate a list of t values for which y is positive
+print("\n" + "=" * 60)
+print("GENERATING SPECIFIC t VALUES FOR POSITIVE y")
+print("=" * 60)
+
+# If you want specific t values, here's how to generate them
+def generate_t_values_for_positive_y(num_values=10, start_offset=0):
+    """Generate t values that yield positive y."""
+    t_values = []
+    # Start from max_t_for_positive_y and go more negative
+    current_t = max_t_for_positive_y - start_offset
+    
+    for i in range(num_values):
+        t_values.append(current_t)
+        current_t -= 1  # Go more negative
+    
+    return t_values
+
+# Generate some t values
+print("\nFirst 10 t values yielding positive y (starting from largest):")
+positive_t_values = generate_t_values_for_positive_y(10, 0)
+
+for i, t_val in enumerate(positive_t_values, 1):
+    y_val = -69178891548 - 7919*t_val
+    print(f"{i:2}. t = {t_val:>10} → y = {y_val:>20} (y > 0: {y_val > 0})")
+
+# Analytical solution
+print("\n" + "=" * 60)
+print("ANALYTICAL SOLUTION")
+print("=" * 60)
+
+print("\nThe inequality y > 0 means:")
+print("-69178891548 - 7919·t > 0")
+print("⇒ -7919·t > 69178891548")
+print("⇒ 7919·t < -69178891548    (multiplying by -1 reverses inequality)")
+critical_float = float(critical_value)
+print(f"⇒ t < {critical_float}")
+print("\nSince t is typically integer in Diophantine contexts:")
+print(f"t ≤ floor({critical_float}) = {floor(critical_value)}")
+print(f"t ≤ {max_t_for_positive_y}")
+
+# For positive integer y (if y needs to be positive integer)
+print("\n" + "=" * 60)
+print("FOR POSITIVE INTEGER y (IF NEEDED)")
+print("=" * 60)
+
+print("\nIf y needs to be a positive integer (not just positive):")
+print("We need: -69178891548 - 7919·t > 0 AND (-69178891548 - 7919·t) ∈ ℤ")
+print("\nSince coefficients are integers, y will be integer for all integer t.")
+print("So the condition is the same: t < -69178891548/7919")
+
+# Special case: if t itself needs to be positive
+print("\n" + "=" * 60)
+print("IF t MUST BE POSITIVE (unlikely given the equation)")
+print("=" * 60)
+
+print("\nIf t needs to be positive (t > 0):")
+print("We need: t > 0 AND t < -69178891548/7919 ≈ -8738000")
+print("This is IMPOSSIBLE since no number can be both > 0 and < -8.7 million")
+print("Therefore, if t must be positive, there are NO solutions with y > 0.")
+
+# Final summary - FIXED VERSION without f-string formatting issues
+print("\n" + "=" * 60)
+print("SUMMARY")
+print("=" * 60)
+
+critical_float = float(critical_value)
+summary = """
+For the equation: y = -69178891548 + (-7919)·t
+
+1. For y > 0: t < {:.6f}
+2. Since t is typically integer: t ≤ {}
+3. There are INFINITELY MANY integer t values yielding y > 0
+   (all integers ≤ {})
+4. All such t values are NEGATIVE (around -8.7 million or less)
+5. If your application requires t > 0, then NO solutions exist with y > 0
+
+Examples of t yielding positive y:
+  t = {} → y = {}
+  t = {} → y = {}
+  t = {} → y = {}
+""".format(
+    critical_float,
+    max_t_for_positive_y,
+    max_t_for_positive_y,
+    max_t_for_positive_y,
+    -69178891548 - 7919*max_t_for_positive_y,
+    max_t_for_positive_y - 1000,
+    -69178891548 - 7919*(max_t_for_positive_y - 1000),
+    max_t_for_positive_y - 10000,
+    -69178891548 - 7919*(max_t_for_positive_y - 10000)
+)
+
+print(summary)
