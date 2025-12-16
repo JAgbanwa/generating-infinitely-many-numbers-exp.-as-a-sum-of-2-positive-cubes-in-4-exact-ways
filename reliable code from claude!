@@ -1,0 +1,67 @@
+# Solve x^2 - 243*y^2 = -1187374107114
+# This is a generalized Pell equation
+
+D = 243  # Coefficient of y^2
+N = -1187374107114  # Right-hand side
+
+print(f"Solving: x^2 - {D}*y^2 = {N}")
+print("=" * 60)
+
+# Factor D to understand the structure
+print(f"\nFactorization of D = {D}: {factor(D)}")
+
+# Check if D is a perfect square (would make the problem degenerate)
+if D.is_square():
+    print(f"Warning: D = {D} is a perfect square!")
+    sqrt_D = sqrt(D)
+    print(f"sqrt(D) = {sqrt_D}")
+
+# For the generalized Pell equation x^2 - D*y^2 = N,
+# we can search for solutions using brute force for small values
+# or use more sophisticated methods
+
+print("\nSearching for solutions...")
+print("-" * 60)
+
+# Method 1: Brute force search for small solutions
+max_search = 10^7  # Search limit for y values
+
+solutions = []
+
+# Search for solutions with |x| and |y| relatively small
+for y in range(0, max_search):
+    # Calculate x^2 = N + D*y^2
+    x_squared = N + D * y^2
+    
+    if x_squared > 0 and x_squared.is_square():
+        x = sqrt(x_squared)
+        solutions.append((x, y))
+        print(f"Solution found: x = {x}, y = {y}")
+        print(f"Verification: {x}^2 - {D}*{y}^2 = {x^2 - D*y^2}")
+        
+        # Also check negative x
+        if x != 0:
+            solutions.append((-x, y))
+            print(f"Solution found: x = {-x}, y = {y}")
+        
+        # For this search, we'll stop after finding first few solutions
+        if len(solutions) >= 4:
+            break
+    
+    # Progress indicator
+    if y > 0 and y % 1000000 == 0:
+        print(f"Searched up to y = {y}...")
+
+if not solutions:
+    print("\nNo solutions found in the search range.")
+    print(f"The equation may have solutions with |y| > {max_search}")
+    print("\nAlternative approach: Using continued fractions and LMM algorithm")
+    print("This would require more sophisticated implementation.")
+else:
+    print(f"\nFound {len(solutions)} solution(s) in range.")
+
+print("\n" + "=" * 60)
+print("Note: For generalized Pell equations with large N,")
+print("solutions (if they exist) may have very large values.")
+print("A complete solution would use the LMM (Lagrange-Matthews-Mollin)")
+print("algorithm or similar advanced techniques.")
