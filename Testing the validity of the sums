@@ -1,0 +1,33 @@
+\section{Testing the validity of the sums}
+
+Per the parametrizations in section 5, we re-express $N$ as follows:
+\begin{align*}
+      89^3 \cdot N(t) &= \left(\dfrac{P_t - Q_t}{4 \cdot \sqrt{243}} + \dfrac{24837}{2}\right)^3 + \left(\dfrac{\left(P_t + Q_t\right)-4023594}{108}\right)^3\\
+           &= \left(\dfrac{P_t - Q_t}{4 \cdot \sqrt{243}} + \dfrac{24303}{2}\right)^3 + \left(\dfrac{\left(P_t + Q_t\right) - 3937086}{108} \right)^3\\
+           &= \left(\dfrac{P_t - Q_t}{4 \cdot \sqrt{243}} + \frac{19497}{2}\right)^3 + \left(\dfrac{\left(P_t + Q_t\right) - 3158514}{108}\right)^3 \\
+           &= \left(\dfrac{P_t - Q_t}{4 \cdot \sqrt{243}} - \frac{23757}{2}\right)^3 + \left(\dfrac{\left(P_t + Q_t\right) + 3848634}{108}\right)^3
+\end{align*}
+
+We first test the validity of the above formulas for some arbitrary cases:
+Let $t = 1$,
+
+\begin{equation*}
+    P_1 - Q_1 = (104193 + 70221\sqrt{243})(70226 + 4505\sqrt{243})^{1} - (104193 - 70221\sqrt{243})(70226 - 4505\sqrt{243})^{1}\\
+\end{equation*}
+\begin{equation*}
+   P_1 - Q_1 = 97213129398 \sqrt{3}
+\end{equation*}
+\begin{equation*}
+    P_1 + Q_1 = (104193 + 70221\sqrt{243})(70226 + 4505\sqrt{243})^{1} + (104193 - 70221\sqrt{243})(70226 - 4505\sqrt{243})^{1}\\
+\end{equation*}
+\begin{equation*}
+   P_1 + Q_1 = 168378079266
+\end{equation*}
+
+\begin{align*}
+   89^3 \cdot  N(1) &= 2700377124^3 + 1559019034^3 \\
+                    &= 2700376857^3 + 1559019835^3 \\
+                    &= 2700374454^3 + 1559027044^3 \\
+                    &= 2700352827^3 + 1559091925^3 \\
+\end{align*}
+
