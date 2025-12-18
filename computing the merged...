@@ -1,0 +1,107 @@
+On substituting these into the merger of \eqref{1.24} and \eqref{1.25}, the resulting equation is as follows:
+
+\begin{multline} \label{1.27}
+    (3n_1 \cdot (g + n_3 + n_5)^2 + 3n_1^2 \cdot (g + n_3 + n_5) + n_1^3) - (3n_3 \cdot (g + n_5)^2 + 3n_3^2 \cdot (g + n_5) + n_3^3) \\
+    + (3n_4 \cdot (b + n_2)^2 + 3n_4^2 \cdot (b + n_2) + n_4^3) - (3n_2 \cdot b^2 + 3n_2^2 \cdot b + n_2^3) = \\
+    (3n_5 \cdot g^2 + 3n_5^2 \cdot g + n_5^3) - (3n_6 \cdot (b + n_2 + n_4)^2 + 3n_6^2 \cdot (b + n_2 + n_4) + n_6^3)
+\end{multline}
+
+\begin{multline} \label{1.28}
+    (9 \cdot (g + 270)^2 + 27 \cdot (g + 270) + 27) - (81 \cdot (g + 243)^2 + 2187 \cdot (g + 243) + 19683) \\
+    + (243 \cdot (b + 9)^2 + 19683 \cdot (b + 9) + 531441) - (27 \cdot b^2 + 243 \cdot b + 729) = \\
+    (729 \cdot g^2 + 177147 \cdot g + 14348907) - (2187 \cdot (b + 90)^2 + 1594323 \cdot (b + 90) + 387420489)
+\end{multline}
+
+To simplify equation \eqref{1.28}, each term will be simplified individually:
+
+\begin{align*}
+   (9 \cdot (g + 270)^2 + 27 \cdot (g + 270) + 27) &= 9\cdot g^2 + 4887 \cdot g + 663417\\
+   81 \cdot (g + 243)^2 + 2187 \cdot (g + 243) + 19683 &= 81 \cdot g^2 + 41553 \cdot g + 5334093 \\
+   243 \cdot (b + 9)^2 + 19683 \cdot (b + 9) + 531441 &= 243 \cdot b^2 + 24057 \cdot b + 728271 \\
+   2187 \cdot (b + 90)^2 + 1594323 \cdot (b + 90) + 387420489 &= 2187 \cdot b^2 + 1987983 \cdot b + 548624259\\
+\end{align*}
+
+Equation \eqref{1.28} can be re-expressed as:
+
+\begin{multline} \label{1.29}
+    (9\cdot g^2 + 4887 \cdot g + 663417) - (81 \cdot g^2 + 41553 \cdot g + 5334093) \\
+    + (243 \cdot b^2 + 24057 \cdot b + 728271 ) - (27 \cdot b^2 + 243 \cdot b + 729) = \\
+    (729 \cdot g^2 + 177147 \cdot g + 14348907) - (2187 \cdot b^2 + 1987983 \cdot b + 548624259)
+\end{multline}
+\begin{multline*} \label{1.30}
+    -72 \cdot g^2 - 36666 \cdot g -4670676 +  216 \cdot b^2 + 23814 \cdot b + 727542 \\
+    + 2187 \cdot b^2 + 1987983 \cdot b + 548624259 - 729 \cdot g^2 - 177147 \cdot g - 14348907 = 0
+\end{multline*}
+\begin{equation} \label{1.31}
+      2403 \cdot b^2 + 2011797 \cdot b - 801 \cdot g^2 - 213813 \cdot g+ 530332218 = 0
+\end{equation}
+\begin{equation}\label{1.33}
+    b = \dfrac{\pm\sqrt{7699212 \cdot g^2 +  2055170556 \cdot g -1050226110207}-2011797}{2 \cdot 2403}
+\end{equation}
+
+We now consider the radical part of equation \eqref{1.33}
+
+\begin{align*}\label{1.34}
+    x^2 &= 7699212 \cdot g^2 +  2055170556 \cdot g -1050226110207\\
+        &= 7699212\cdot \left( g^2 + 2 \cdot \dfrac{2055170556}{2 \cdot 7699212}\cdot g + (\dfrac{2055170556}{2 \cdot 7699212})^2 + \dfrac{-1050226110207}{7699212} - (\dfrac{2055170556}{2 \cdot 95052})^2\right)\\
+        &= 7699212 \cdot \left(\left(g + \dfrac{2055170556}{2 \cdot 7699212}\right)^2 + \dfrac{-1050226110207}{7699212} - \left(\dfrac{2055170556}{2 \cdot 7699212}\right)^2\right)\\
+        &= 7699212\cdot \left(g + \dfrac{2055170556}{2 \cdot 7699212}\right)^2 + 7699212 \cdot \left(\dfrac{-1050226110207}{7699212} - \left(\dfrac{2055170556}{2 \cdot 7699212}\right)^2 \right)\\
+        &= 7699212\cdot \left(g + \dfrac{2055170556}{2 \cdot 7699212}\right)^2 - 1187374107114\\
+\end{align*}
+\begin{equation} 
+    x^2 = 7699212\cdot \left(g + \dfrac{2055170556}{2 \cdot 7699212}\right)^2 - 1187374107114
+\end{equation}
+
+Given equation \eqref{1.35}, let $y =  \left(g + \dfrac{2055170556}{2 \cdot 7699212}\right)$. Thus,
+
+\begin{equation} \label{1.38}
+    x^2 - 7699212\cdot y^2 = - 1187374107114
+\end{equation}
+
+Considering $7699212 = 243 \cdot 178^2$; let $Y = 178 \cdot y$
+\begin{equation} \label{1.36}
+    x^2 - 243\cdot Y^2 = - 1187374107114
+\end{equation}
+$(x_0, Y_0) = (104193, 70221)$
+
+\[
+\text{All integer solutions } (x, y) \text{ to } 
+\quad x^2 - 243y^2 = -1187374107114
+\]
+\[
+\text{given } (x_0, Y_0) = (104193, 70221)
+\text{ and fundamental unit } (x_1, Y_1) = (70226, 4505)
+\text{ are given by:}
+\]
+
+\begin{equation}
+\boxed{
+\begin{aligned}
+x &= \frac{
+(104193 + 70221\sqrt{243})(70226 + 4505\sqrt{243})^{t}
++ (104193 - 70221\sqrt{243})(70226 - 4505\sqrt{243})^{t}
+}{2}, \\[10pt]
+Y &= \frac{(104193 + 70221\sqrt{243})(70226 + 4505\sqrt{243})^{t}
+- (104193 - 70221\sqrt{243})(70226 - 4505\sqrt{243})^{t}}{2\sqrt{243}},
+\end{aligned}
+}
+\end{equation}
+
+\[
+\text{where } t \ge 0 \text{ is any integer.}
+\]
+
+Since the priority of taxicab numbers is on positive solutions, with reference to $b$ in equation \eqref{1.33}, we use the positive radicals to ensure positive values. Equation \eqref{1.33} can be re-expressed as:
+
+\begin{equation}\label{1.35}
+   b = \dfrac{\left(P_t + Q_t\right)- 4023594}{9612}
+\end{equation}
+
+Since $y = \left(g + \dfrac{2055170556}{2 \cdot 7699212}\right)$,
+
+\begin{align*}\label{1.39}
+    g + \frac{23757}{178} &= y_t \\
+    g &=  \dfrac{P_t - Q_t}{356 \cdot \sqrt{243}} - \frac{23757}{178} \quad \text{where} \\
+    P_t &= (104193 + 70221\sqrt{243})(70226 + 4505\sqrt{243})^{t}, \\
+    Q_t &= (104193 - 70221\sqrt{243})(70226 - 4505\sqrt{243})^{t}.
+\end{align*}
