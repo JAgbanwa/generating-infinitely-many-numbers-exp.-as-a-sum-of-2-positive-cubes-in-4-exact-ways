@@ -1,0 +1,42 @@
+\section{Substituting $b(t)$ and $g(t)$ into corresponding formulas}
+In this section, we substitute $b(t)$ and $g(t)$ into other variables, $a,c,d,e,f,h$ given the substitutions in section 1.
+
+Recall equation \eqref{1.071}, $e = g + n_5$, from the supposition $n_5 = 243$, $e = g + 243$, thus
+\begin{align*}
+    e &= \dfrac{P_t - Q_t}{356 \cdot \sqrt{243}} - \frac{23757}{178} + 243\\
+      &= \dfrac{P_t - Q_t}{356 \cdot \sqrt{243}} + \frac{19497}{178} \\ 
+\end{align*}
+
+We also recall from equation \eqref{1.21} that $c = g + n_3 + n_5$, given that $n_3 = 27$ and $n_5 = 243$, $c = g + 270$,
+
+\begin{align*}
+    c &= \dfrac{P_t - Q_t}{356 \cdot \sqrt{243}} - \frac{23757}{178} + 270\\
+      &= \dfrac{P_t - Q_t}{356 \cdot \sqrt{243}} + \dfrac{24303}{178}\\
+\end{align*}
+
+Referencing equation \eqref{1.050}, where $f = b + n_2 + n_4$, $f = b+90$. Thus,
+ 
+\begin{align*}
+    f &= \dfrac{\left(P_t + Q_t\right)- 4023594}{9612} + 90\\
+      &= \dfrac{\left(P_t + Q_t\right)- 3158514}{9612}
+\end{align*}
+
+
+From equation \eqref{1.051}, $h = b + n_2 + n_4 + n_6$ and given the suppositions in section 4, $h = b + 819$. Thus,
+
+\begin{align*}
+   h &= \dfrac{\left(P_t + Q_t\right) - 4023594}{9612} + 819\\
+     &= \dfrac{\left(P_t + Q_t\right) + 3848634}{9612}
+\end{align*}
+Considering equation \eqref{1.0499}, where $a = e + n_1 + n_3$ and given the suppositions of section 4, $a = e + 30$. Given the closed form formula for $e$ yielded, we make due substitutions to \eqref{1.0499} to yield:
+
+\begin{align*}
+    a &= \dfrac{P_t - Q_t}{356 \cdot \sqrt{243}} + \frac{19497}{178} + 30\\
+      &= \dfrac{P_t - Q_t}{356 \cdot \sqrt{243}} + \frac{24837}{178}
+\end{align*}    
+
+From equation \eqref{1.047}, $ b + n_2 = d$, $ b + 9 = d$. Below is the formula for $d$:
+\begin{align*}
+    d &= \dfrac{\left(P_t + Q_t\right) - 4023594}{9612} + 9\\
+      &= \dfrac{\left(P_t + Q_t\right) - 3937086}{9612} 
+\end{align*}
